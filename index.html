@@ -26,7 +26,7 @@
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 30px;
-            max-width: 500px;
+            max-width: 450px;
             width: 100%;
         }
 
@@ -37,465 +37,568 @@
 
         .header h1 {
             color: #333;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 10px;
-        }
-
-        .health-bar-container {
-            width: 100%;
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .health-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1);
-            transition: width 0.5s ease;
-            border-radius: 10px;
         }
 
         .stage-info {
             display: flex;
             justify-content: space-between;
-            color: #666;
-            font-size: 14px;
+            align-items: center;
             margin-bottom: 15px;
         }
 
+        .stage-text {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .health-bar-container {
+            width: 150px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .health-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .health-bar.warning {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        }
+
+        .health-bar.danger {
+            background: linear-gradient(90deg, #f87171, #ef4444);
+        }
+
         .instruction {
-            background: #f0f4ff;
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
             padding: 15px;
-            border-radius: 8px;
             margin-bottom: 20px;
-            text-align: center;
-            color: #4a5568;
-            font-weight: 500;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .instruction p {
+            color: #0369a1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .instruction strong {
+            color: #0c4a6e;
         }
 
         .captcha-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            margin-bottom: 20px;
-            aspect-ratio: 1;
-        }
-
-        .grid-cell {
-            background: #ddd;
-            border: 3px solid #bbb;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            background: #333;
+            border: 2px solid #333;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
             overflow: hidden;
+            aspect-ratio: 1;
+            margin-bottom: 20px;
+        }
+
+        .captcha-cell {
             position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.1s ease;
         }
 
-        .grid-cell:hover {
-            border-color: #667eea;
+        .captcha-cell:hover {
             transform: scale(1.02);
+            z-index: 1;
         }
 
-        .grid-cell.selected {
-            border-color: #667eea;
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
-        }
-
-        .grid-cell.correct {
-            border-color: #48bb78;
-            background: rgba(72, 187, 120, 0.3);
-        }
-
-        .grid-cell.wrong {
-            border-color: #f56565;
-            background: rgba(245, 101, 101, 0.3);
-        }
-
-        .cell-content {
-            width: 100%;
-            height: 100%;
+        .captcha-cell img {
+            width: 300%;
+            height: 300%;
             object-fit: cover;
-            image-rendering: pixelated;
+            pointer-events: none;
         }
 
-        .btn {
+        .captcha-cell.selected {
+            outline: 4px solid #3b82f6;
+            outline-offset: -4px;
+        }
+
+        .captcha-cell.correct {
+            outline: 4px solid #22c55e !important;
+            outline-offset: -4px;
+        }
+
+        .captcha-cell.wrong {
+            outline: 4px solid #ef4444 !important;
+            outline-offset: -4px;
+        }
+
+        .verify-btn {
             width: 100%;
             padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .verify-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-primary:disabled {
-            opacity: 0.5;
+        .verify-btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
+        }
+
+        .verify-btn .checkbox {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 18px;
         }
 
         .feedback {
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
             margin-top: 15px;
-            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
             display: none;
         }
 
         .feedback.success {
-            background: #c6f6d5;
-            color: #276749;
+            background: #dcfce7;
+            color: #166534;
             display: block;
         }
 
         .feedback.error {
-            background: #fed7d7;
-            color: #c53030;
+            background: #fee2e2;
+            color: #991b1b;
             display: block;
         }
 
         .game-over {
             text-align: center;
-            display: none;
+            padding: 40px 20px;
         }
 
         .game-over h2 {
-            color: #e53e3e;
+            color: #ef4444;
+            font-size: 28px;
             margin-bottom: 15px;
         }
 
         .game-over p {
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .restart-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <div class="header">
-            <h1>🔐 reCaptcha Game</h1>
-            <div class="health-bar-container">
-                <div class="health-bar" id="healthBar"></div>
-            </div>
-            <div class="stage-info">
-                <span>Stage: <strong id="stageNum">1</strong></span>
-                <span>Health: <strong id="healthNum">100</strong>%</span>
-            </div>
+        <div id="loading-screen" class="loading">
+            <div class="spinner"></div>
+            <p>이미지를 불러오는 중...</p>
         </div>
 
-        <div id="gameArea">
-            <div class="instruction" id="instruction">
-                🔍 "자동차"가 있는 칸을 모두 선택하세요!
+        <div id="game-screen" class="hidden">
+            <div class="header">
+                <h1>🔍 reCaptcha Game</h1>
+                <div class="stage-info">
+                    <span class="stage-text">Stage <span id="stage-num">1</span></span>
+                    <div class="health-bar-container">
+                        <div id="health-bar" class="health-bar"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="captcha-grid" id="captchaGrid"></div>
+            <div class="instruction">
+                <p><strong id="category-text">"자동차"</strong>를 포함하는 모든 사각형을 선택하세요.</p>
+            </div>
 
-            <button class="btn btn-primary" id="verifyBtn" onclick="verifySelection()">
-                확인 (Verify)
+            <div id="captcha-grid" class="captcha-grid">
+                <!-- Cells will be generated by JavaScript -->
+            </div>
+
+            <button id="verify-btn" class="verify-btn" disabled>
+                <span class="checkbox">☐</span>
+                <span>확인</span>
             </button>
 
-            <div class="feedback" id="feedback"></div>
+            <div id="feedback" class="feedback"></div>
         </div>
 
-        <div class="game-over" id="gameOver">
+        <div id="game-over-screen" class="hidden game-over">
             <h2>💀 게임 오버!</h2>
-            <p>도착한 스테이지: <span id="finalStage">1</span></p>
-            <button class="btn btn-primary" onclick="restartGame()">다시 시작</button>
+            <p>최종 도달 스테이지: <strong id="final-stage">1</strong></p>
+            <button class="restart-btn" onclick="restartGame()">다시 시작</button>
         </div>
     </div>
 
     <script>
-        // 게임 상태
-        let gameState = {
-            stage: 1,
-            health: 100,
-            targetCategory: '',
-            correctCells: [],
-            selectedCells: [],
-            gridSize: 3,
-            isProcessing: false
-        };
-
-        // 카테고리 및 이미지 소스
-        const categories = [
-            { name: '자동차', emoji: '🚗', colors: ['#e74c3c', '#3498db', '#2ecc71'] },
-            { name: '나무', emoji: '🌳', colors: ['#27ae60', '#229954', '#1e8449'] },
-            { name: '신호등', emoji: '🚦', colors: ['#e74c3c', '#f1c40f', '#2ecc71'] },
-            { name: '자전거', emoji: '🚲', colors: ['#34495e', '#7f8c8d', '#95a5a6'] },
-            { name: '꽃', emoji: '🌸', colors: ['#ff69b4', '#ff1493', '#c71585'] },
-            { name: '구름', emoji: '☁️', colors: ['#ecf0f1', '#bdc3c7', '#95a5a6'] },
-            { name: '집', emoji: '🏠', colors: ['#d35400', '#e67e22', '#f39c12'] },
-            { name: '별', emoji: '⭐', colors: ['#f1c40f', '#f39c12', '#e67e22'] }
+        // Unsplash 이미지 URL 목록 (거리, 사물 중심 20 개)
+        const imageUrls = [
+            // 자동차
+            'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',
+            'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80',
+            'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=600&q=80',
+            'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80',
+            'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=80',
+            
+            // 신호등/거리
+            'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=600&q=80',
+            'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=600&q=80',
+            'https://images.unsplash.com/photo-1565551928456-03bf0cce0c2d?w=600&q=80',
+            'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=600&q=80',
+            'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80',
+            
+            // 자전거/오토바이
+            'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=600&q=80',
+            'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&q=80',
+            'https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=600&q=80',
+            'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=600&q=80',
+            'https://images.unsplash.com/photo-1511994298220-4127630aa68b?w=600&q=80',
+            
+            // 건물/상점/간판
+            'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=600&q=80',
+            'https://images.unsplash.com/photo-1560518883-ce633abb8e96?w=600&q=80',
+            'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80',
+            'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&q=80',
+            'https://images.unsplash.com/photo-1559563362-c69ed7aa59f6?w=600&q=80'
         ];
 
-        // 캔버스를 사용하여 동적으로 이미지 생성
-        function generateCellImage(category, seed) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 100;
-            canvas.height = 100;
-            const ctx = canvas.getContext('2d');
+        // 카테고리 정의
+        const categories = [
+            { name: '자동차', keyword: 'car', emoji: '🚗' },
+            { name: '신호등', keyword: 'traffic light', emoji: '🚦' },
+            { name: '자전거', keyword: 'bicycle', emoji: '🚲' },
+            { name: '건물', keyword: 'building', emoji: '🏢' }
+        ];
 
-            // 배경색 (무작위 그라데이션)
-            const gradient = ctx.createLinearGradient(0, 0, 100, 100);
-            const baseColor = category.colors[Math.floor(Math.random() * category.colors.length)];
-            gradient.addColorStop(0, baseColor);
-            gradient.addColorStop(1, '#ffffff');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 100, 100);
+        let currentStage = 1;
+        let health = 100;
+        let currentImageIndex = 0;
+        let selectedCells = [];
+        let correctCells = [];
+        let preloadedImages = [];
+        let gameActive = true;
 
-            // 노이즈 추가 (텍스처 효과)
-            for (let i = 0; i < 200; i++) {
-                ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.1)`;
-                ctx.fillRect(Math.random() * 100, Math.random() * 100, 2, 2);
+        // DOM 요소들
+        const loadingScreen = document.getElementById('loading-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const stageNumEl = document.getElementById('stage-num');
+        const healthBarEl = document.getElementById('health-bar');
+        const categoryTextEl = document.getElementById('category-text');
+        const captchaGridEl = document.getElementById('captcha-grid');
+        const verifyBtn = document.getElementById('verify-btn');
+        const feedbackEl = document.getElementById('feedback');
+        const finalStageEl = document.getElementById('final-stage');
+
+        // 이미지 프리로드
+        async function preloadImages() {
+            const promises = imageUrls.map(url => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = () => resolve(img);
+                    img.onerror = () => reject(url);
+                    img.src = url;
+                });
+            });
+
+            try {
+                preloadedImages = await Promise.all(promises);
+                console.log('모든 이미지 로드 완료:', preloadedImages.length);
+                startGame();
+            } catch (error) {
+                console.error('이미지 로드 실패:', error);
+                alert('이미지를 불러오는데 실패했습니다. 페이지를 새로고침 해주세요.');
             }
-
-            // 시드 값에 따라 다른 패턴 그리기
-            const pattern = seed % 5;
-            ctx.fillStyle = category.colors[seed % category.colors.length];
-            
-            switch(pattern) {
-                case 0: // 원들
-                    for (let i = 0; i < 5 + (seed % 3); i++) {
-                        ctx.beginPath();
-                        ctx.arc(20 + (i * 15), 50, 10 + (seed % 8), 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-                case 1: // 사각형들
-                    for (let i = 0; i < 4 + (seed % 3); i++) {
-                        ctx.fillRect(10 + (i * 20), 30 + (seed % 20), 15, 15 + (seed % 10));
-                    }
-                    break;
-                case 2: // 삼각형들
-                    for (let i = 0; i < 4; i++) {
-                        ctx.beginPath();
-                        ctx.moveTo(15 + (i * 20), 80);
-                        ctx.lineTo(25 + (i * 20), 30);
-                        ctx.lineTo(35 + (i * 20), 80);
-                        ctx.closePath();
-                        ctx.fill();
-                    }
-                    break;
-                case 3: // 선들
-                    for (let i = 0; i < 8 + (seed % 5); i++) {
-                        ctx.beginPath();
-                        ctx.moveTo(0, i * 12);
-                        ctx.lineTo(100, i * 12 + (seed % 10));
-                        ctx.strokeStyle = category.colors[(i + seed) % category.colors.length];
-                        ctx.lineWidth = 2;
-                        ctx.stroke();
-                    }
-                    break;
-                case 4: // 점들
-                    for (let i = 0; i < 30 + (seed % 20); i++) {
-                        ctx.beginPath();
-                        ctx.arc(Math.random() * 100, Math.random() * 100, 3 + (seed % 5), 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-            }
-
-            // 이모지 오버레이 (선택사항 - 실제 객체를 암시)
-            if (seed === gameState.correctCells[0] || gameState.correctCells.includes(seed)) {
-                ctx.font = '40px Arial';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(category.emoji, 50, 50);
-            }
-
-            return canvas.toDataURL();
         }
 
-        // 게임 초기화
-        function initGame() {
-            gameState.health = 100;
-            gameState.stage = 1;
+        // 게임 시작
+        function startGame() {
+            loadingScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            currentStage = 1;
+            health = 100;
+            gameActive = true;
             updateHealthBar();
-            startStage();
+            loadNewStage();
         }
 
-        // 새 스테이지 시작
-        function startStage() {
-            gameState.isProcessing = false;
-            gameState.selectedCells = [];
-            document.getElementById('feedback').className = 'feedback';
-            document.getElementById('feedback').textContent = '';
-            document.getElementById('verifyBtn').disabled = false;
-            document.getElementById('gameArea').classList.remove('hidden');
-            document.getElementById('gameOver').style.display = 'none';
+        // 새 스테이지 로드
+        function loadNewStage() {
+            selectedCells = [];
+            correctCells = [];
+            verifyBtn.disabled = true;
+            verifyBtn.querySelector('.checkbox').textContent = '☐';
+            feedbackEl.className = 'feedback';
+            feedbackEl.textContent = '';
+
+            stageNumEl.textContent = currentStage;
+
+            // 랜덤 이미지 선택 (이전과 다른 것)
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * preloadedImages.length);
+            } while (newIndex === currentImageIndex && preloadedImages.length > 1);
+            currentImageIndex = newIndex;
 
             // 랜덤 카테고리 선택
-            const categoryIndex = Math.floor(Math.random() * categories.length);
-            gameState.targetCategory = categories[categoryIndex];
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            categoryTextEl.innerHTML = `${category.emoji} "${category.name}"`;
 
-            // 지시문 업데이트
-            document.getElementById('instruction').textContent = 
-                `🔍 "${gameState.targetCategory.name}"가 있는 칸을 모두 선택하세요!`;
-            document.getElementById('stageNum').textContent = gameState.stage;
-
-            // 정답 셀 결정 (1-3개)
+            // 정답 셀 결정 (1~3 개)
             const numCorrect = Math.floor(Math.random() * 3) + 1;
-            gameState.correctCells = [];
-            while (gameState.correctCells.length < numCorrect) {
-                const cell = Math.floor(Math.random() * 9);
-                if (!gameState.correctCells.includes(cell)) {
-                    gameState.correctCells.push(cell);
-                }
+            const cellIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+            
+            // Fisher-Yates 셔플
+            for (let i = cellIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cellIndices[i], cellIndices[j]] = [cellIndices[j], cellIndices[i]];
             }
+            
+            correctCells = cellIndices.slice(0, numCorrect).sort((a, b) => a - b);
 
             // 그리드 생성
-            createGrid();
+            createGrid(preloadedImages[currentImageIndex]);
         }
 
         // 그리드 생성
-        function createGrid() {
-            const grid = document.getElementById('captchaGrid');
-            grid.innerHTML = '';
+        function createGrid(img) {
+            captchaGridEl.innerHTML = '';
 
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement('div');
-                cell.className = 'grid-cell';
+                cell.className = 'captcha-cell';
                 cell.dataset.index = i;
-                cell.onclick = () => toggleCell(i);
 
-                const img = document.createElement('img');
-                img.className = 'cell-content';
-                img.src = generateCellImage(gameState.targetCategory, i);
-                img.alt = `Cell ${i + 1}`;
+                const cellImg = document.createElement('img');
+                cellImg.src = img.src;
 
-                cell.appendChild(img);
-                grid.appendChild(cell);
+                // 각 셀의 위치 계산 (3x3 그리드)
+                const row = Math.floor(i / 3);
+                const col = i % 3;
+
+                // objectPosition 으로 이미지 영역 조정
+                const posX = col * 50;
+                const posY = row * 50;
+                cellImg.style.objectPosition = `${posX}% ${posY}%`;
+
+                cell.appendChild(cellImg);
+                cell.addEventListener('click', () => toggleCell(cell, i));
+                
+                captchaGridEl.appendChild(cell);
             }
         }
 
         // 셀 토글
-        function toggleCell(index) {
-            if (gameState.isProcessing) return;
+        function toggleCell(cell, index) {
+            if (!gameActive) return;
 
-            const cells = document.querySelectorAll('.grid-cell');
-            const cell = cells[index];
-
-            if (gameState.selectedCells.includes(index)) {
-                gameState.selectedCells = gameState.selectedCells.filter(i => i !== index);
-                cell.classList.remove('selected');
-            } else {
-                gameState.selectedCells.push(index);
+            const selectedIndex = selectedCells.indexOf(index);
+            
+            if (selectedIndex === -1) {
+                selectedCells.push(index);
                 cell.classList.add('selected');
+            } else {
+                selectedCells.splice(selectedIndex, 1);
+                cell.classList.remove('selected');
             }
+
+            verifyBtn.disabled = selectedCells.length === 0;
+            verifyBtn.querySelector('.checkbox').textContent = selectedCells.length > 0 ? '✓' : '☐';
         }
 
-        // 선택 검증
-        function verifySelection() {
-            if (gameState.isProcessing) return;
-            if (gameState.selectedCells.length === 0) {
-                showFeedback('최소 하나의 칸을 선택해주세요!', 'error');
-                return;
-            }
+        // 확인 버튼 클릭
+        verifyBtn.addEventListener('click', () => {
+            if (!gameActive || selectedCells.length === 0) return;
 
-            gameState.isProcessing = true;
-            document.getElementById('verifyBtn').disabled = true;
+            verifyAnswer();
+        });
 
-            // 정답/오답 확인
-            const correctSelection = gameState.correctCells.every(c => gameState.selectedCells.includes(c)) &&
-                                    gameState.selectedCells.every(s => gameState.correctCells.includes(s));
-
-            // 시각적 피드백 표시
-            const cells = document.querySelectorAll('.grid-cell');
+        // 정답 확인
+        function verifyAnswer() {
+            const cells = document.querySelectorAll('.captcha-cell');
             
-            gameState.correctCells.forEach(index => {
-                cells[index].classList.add('correct');
+            // 모든 셀 초기화
+            cells.forEach(cell => {
+                cell.classList.remove('selected', 'correct', 'wrong');
             });
 
-            gameState.selectedCells.forEach(index => {
-                if (!gameState.correctCells.includes(index)) {
-                    cells[index].classList.add('wrong');
+            // 정답/오답 표시
+            let wrongSelections = 0;
+            let missedCorrect = 0;
+
+            // 선택한 셀들 확인
+            selectedCells.forEach(index => {
+                const cell = cells[index];
+                if (correctCells.includes(index)) {
+                    cell.classList.add('correct');
+                } else {
+                    cell.classList.add('wrong');
+                    wrongSelections++;
                 }
             });
 
-            if (correctSelection) {
-                // 정답
-                showFeedback('✅ 정답입니다! 다음 스테이지로 이동합니다.', 'success');
-                setTimeout(() => {
-                    gameState.stage++;
-                    startStage();
-                }, 1500);
-            } else {
-                // 오답 - 체력 감소
-                const wrongCount = gameState.selectedCells.filter(s => !gameState.correctCells.includes(s)).length;
-                const missedCount = gameState.correctCells.filter(c => !gameState.selectedCells.includes(c)).length;
-                const damage = (wrongCount + missedCount) * 15;
+            // 놓친 정답 확인
+            correctCells.forEach(index => {
+                if (!selectedCells.includes(index)) {
+                    missedCorrect++;
+                }
+            });
 
-                gameState.health = Math.max(0, gameState.health - damage);
+            // 정답 셀도 초록색으로 표시 (선택되지 않았더라도)
+            correctCells.forEach(index => {
+                const cell = cells[index];
+                if (!cell.classList.contains('wrong')) {
+                    cell.classList.add('correct');
+                }
+            });
+
+            // 피해 계산
+            const totalErrors = wrongSelections + missedCorrect;
+            const damage = totalErrors * 15;
+            
+            if (totalErrors > 0) {
+                health -= damage;
+                if (health < 0) health = 0;
                 updateHealthBar();
 
-                showFeedback(`❌ 오답입니다! ${damage}% 피해 (${wrongCount}개 잘못선택, ${missedCount}개 놓침)`, 'error');
-
-                setTimeout(() => {
-                    if (gameState.health <= 0) {
-                        gameOver();
-                    } else {
-                        startStage();
-                    }
-                }, 2000);
+                feedbackEl.className = 'feedback error';
+                feedbackEl.textContent = `❌ 오답 ${totalErrors}개! 체력 -${damage}%`;
+            } else {
+                feedbackEl.className = 'feedback success';
+                feedbackEl.textContent = '✅ 정답입니다! 다음 스테이지로 이동합니다.';
             }
-        }
 
-        // 피드백 표시
-        function showFeedback(message, type) {
-            const feedback = document.getElementById('feedback');
-            feedback.textContent = message;
-            feedback.className = `feedback ${type}`;
+            // 게임 오버 체크
+            if (health <= 0) {
+                gameActive = false;
+                setTimeout(() => {
+                    showGameOver();
+                }, 1500);
+            } else if (totalErrors === 0) {
+                // 정답 시 다음 스테이지로
+                gameActive = false;
+                setTimeout(() => {
+                    currentStage++;
+                    gameActive = true;
+                    loadNewStage();
+                }, 1500);
+            } else {
+                // 오답이지만 계속 플레이
+                setTimeout(() => {
+                    selectedCells = [];
+                    verifyBtn.disabled = true;
+                    verifyBtn.querySelector('.checkbox').textContent = '☐';
+                    feedbackEl.className = 'feedback';
+                    feedbackEl.textContent = '';
+                    
+                    cells.forEach(cell => {
+                        cell.classList.remove('correct', 'wrong');
+                    });
+                }, 1500);
+            }
         }
 
         // 체력바 업데이트
         function updateHealthBar() {
-            const healthBar = document.getElementById('healthBar');
-            const healthNum = document.getElementById('healthNum');
-            healthBar.style.width = `${gameState.health}%`;
-            healthNum.textContent = gameState.health;
-
-            // 체력에 따른 색상 변경
-            if (gameState.health > 60) {
-                healthBar.style.background = 'linear-gradient(90deg, #1dd1a1, #48dbfb)';
-            } else if (gameState.health > 30) {
-                healthBar.style.background = 'linear-gradient(90deg, #feca57, #ff9f43)';
-            } else {
-                healthBar.style.background = 'linear-gradient(90deg, #ff6b6b, #ee5a24)';
+            healthBarEl.style.width = `${health}%`;
+            
+            healthBarEl.classList.remove('warning', 'danger');
+            
+            if (health <= 30) {
+                healthBarEl.classList.add('danger');
+            } else if (health <= 60) {
+                healthBarEl.classList.add('warning');
             }
         }
 
-        // 게임 오버
-        function gameOver() {
-            document.getElementById('gameArea').classList.add('hidden');
-            document.getElementById('gameOver').style.display = 'block';
-            document.getElementById('finalStage').textContent = gameState.stage;
+        // 게임 오버 표시
+        function showGameOver() {
+            gameScreen.classList.add('hidden');
+            gameOverScreen.classList.remove('hidden');
+            finalStageEl.textContent = currentStage;
         }
 
         // 게임 재시작
         function restartGame() {
-            initGame();
+            gameOverScreen.classList.add('hidden');
+            startGame();
         }
 
-        // 게임 시작
-        initGame();
+        // 게임 시작 (이미지 로드 후)
+        preloadImages();
     </script>
 </body>
 </html>
